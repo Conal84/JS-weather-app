@@ -1,3 +1,6 @@
+require('dotenv').config();
+const api_key = process.env.API_KEY;
+
 // Get our long and lat location
 window.addEventListener('load', () => {
   let long;
