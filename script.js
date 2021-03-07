@@ -8,6 +8,7 @@ const timezoneEl = document.querySelector('.location-timezone');
 const tempEl = document.querySelector('.temp-degree');
 const descriptionEl = document.querySelector('.temp-description');
 const iconEl = document.querySelector('.icon');
+const faviconEl = document.querySelector('.favicon');
 
 /**
  * getWeather data from openweather api
@@ -24,7 +25,8 @@ const getWeather = async function (long, lat) {
   timezoneEl.innerHTML = `${data.name}, ${data.sys.country}`;
   descriptionEl.innerHTML = data.weather[0].description;
   tempEl.innerHTML = data.main.temp;
-  iconEl.src = `http://openweathermap.org/img/wn/${icon}@2x.png`;
+  iconEl.src = `http://openweathermap.org/img/wn/${icon}@4x.png`;
+  faviconEl.href = `http://openweathermap.org/img/wn/${icon}@4x.png`;
 };
 
 // Get our long and lat location
@@ -34,7 +36,6 @@ window.addEventListener('load', () => {
 
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition((position) => {
-      console.log(position);
       long = position.coords.longitude;
       lat = position.coords.latitude;
       getWeather(long, lat);
