@@ -3,6 +3,12 @@ import 'regenerator-runtime/runtime';
 require('dotenv').config();
 const api_key = process.env.API_KEY;
 
+// HTML elements
+const timezoneEl = document.querySelector('.location-timezone');
+const tempEl = document.querySelector('.temp-degree');
+const descriptionEl = document.querySelector('.temp-description');
+const iconEl = document.querySelector('.icon');
+
 /**
  * getWeather data from openweather api
  * @param {int} long
@@ -10,10 +16,15 @@ const api_key = process.env.API_KEY;
  */
 const getWeather = async function (long, lat) {
   const res = await fetch(
-    `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${api_key}`
+    `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&units=metric&appid=${api_key}`
   );
   const data = await res.json();
-  console.log(data);
+  const icon = data.weather[0].icon;
+
+  timezoneEl.innerHTML = `${data.name}, ${data.sys.country}`;
+  descriptionEl.innerHTML = data.weather[0].description;
+  tempEl.innerHTML = data.main.temp;
+  iconEl.src = `http://openweathermap.org/img/wn/${icon}@2x.png`;
 };
 
 // Get our long and lat location
